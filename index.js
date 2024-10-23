@@ -158,8 +158,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let count = 0;
     let activityRecords = [];
 
-    const CLIENT_ID = '653656640517-h8kvhggkbb7l064guklr09b88d5fc9dl.apps.googleusercontent.com';  // Reemplaza con tu Client ID
-    const API_KEY = 'AIzaSyAStIv2fQDNeafMyRs_5rEusfdrPD1qI6k';      // Reemplaza con tu API Key
+    const CLIENT_ID = '653656640517-h8kvhggkbb7l064guklr09b88d5fc9dl.apps.googleusercontent.com';  
+    const API_KEY = 'AIzaSyAStIv2fQDNeafMyRs_5rEusfdrPD1qI6k';      
     const DISCOVERY_DOCS = ["https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest"];
     const SCOPES = "https://www.googleapis.com/auth/calendar.events";
 
@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const increaseBtn = document.getElementById("increaseBtn");
     const activityLog = document.getElementById("activityLog");
 
-    // Estilos aplicados dinámicamente
+    // Estilos 
     document.body.style.fontFamily = "Arial, sans-serif";
     document.body.style.textAlign = "center";
     document.body.style.backgroundColor = "#f4f4f9";
@@ -209,7 +209,7 @@ document.addEventListener('DOMContentLoaded', () => {
         button.style.margin = "10px";
     });
 
-    resetBtn.style.backgroundColor = "#dc3545";  // Cambiar color para resaltar el reset
+    resetBtn.style.backgroundColor = "#dc3545";  
 
     activityLog.style.marginTop = "20px";
     activityLog.style.padding = "10px";
@@ -217,7 +217,7 @@ document.addEventListener('DOMContentLoaded', () => {
     activityLog.style.borderRadius = "5px";
     activityLog.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.1)";
 
-    // Funciones para el contador
+    // contador
     increaseBtn.onclick = function () {
         count++;
         countLabel.textContent = count;
@@ -232,26 +232,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     resetBtn.onclick = function () {
         if (count > 0) {
-            // Registrar actividad antes de resetear el contador
             registerActivity(count);
         }
-        count = 0;  // Reiniciar el contador a cero
+        count = 0;  
         countLabel.textContent = count;
-        displayActivity();  // Mostrar las actividades registradas
+        displayActivity();  
     };
 
-    // Función para registrar la actividad
+    //  actividad
     function registerActivity(currentCount) {
-        const now = new Date();  // Obtener fecha y hora actual
-        const date = now.toLocaleDateString();  // Fecha en formato local
-        const time = now.toTimeString().split(' ')[0];  // Hora en formato HH:MM:SS
+        const now = new Date();  
+        const date = now.toLocaleDateString();  
+        const time = now.toTimeString().split(' ')[0];  
         activityRecords.push({ count: currentCount, date: date, time: time });
 
-        // Crear un evento en Google Calendar
+        // Crear un evento 
         createCalendarEvent(currentCount, date, time);
     }
 
-    // Función para mostrar la actividad registrada
+    
     function displayActivity() {
         activityLog.innerHTML = '<h3>Registro de Actividad</h3>';
         activityRecords.forEach(record => {
@@ -259,12 +258,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Cargar la API de Google Calendar
+    // API
     function handleClientLoad() {
         gapi.load('client:auth2', initClient);
     }
 
-    // Inicializar el cliente de Google API
     function initClient() {
         gapi.client.init({
             apiKey: API_KEY,
@@ -291,19 +289,17 @@ document.addEventListener('DOMContentLoaded', () => {
             'summary': `${tapCount} Taps Record`,
             'description': `Registro de actividad: ${tapCount} taps`,
             'start': {
-                'dateTime': new Date().toISOString(),  // Hora de inicio del evento
+                'dateTime': new Date().toISOString(),  
                 'timeZone': 'America/Santo_Domingo'
             },
             'end': {
-                'dateTime': new Date(new Date().getTime() + (30 * 60 * 1000)).toISOString(),  // Hora de finalización
+                'dateTime': new Date(new Date().getTime() + (30 * 60 * 1000)).toISOString(),  
                 'timeZone': 'America/Santo_Domingo'
             }
         };
     
-        // Probar la API: Mostrar el evento en la consola
         console.log("Datos del evento que se enviarán a Google Calendar:", event);
     
-        // Intentar insertar el evento en el calendario
         
         gapi.client.calendar.events.insert({
             'calendarId': 'primary',
@@ -315,7 +311,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     
-    // Función para crear un evento en Google Calendar
     function createCalendarEvent(tapCount, date, time) {
         const event = {
             'summary': `${tapCount} Taps Record`,
@@ -341,6 +336,6 @@ document.addEventListener('DOMContentLoaded', () => {
         */
     }
 
-    // Cargar y autenticar el cliente de Google Calendar cuando la página esté lista
+    // Cargar y autenticar 
     handleClientLoad();
 });
